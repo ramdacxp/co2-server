@@ -1,0 +1,5 @@
+.git
+.gitignore
+images
+README.md
+**/node_modules

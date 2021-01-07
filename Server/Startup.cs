@@ -27,7 +27,7 @@ namespace Server
 
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "wwwRoot";
+                configuration.RootPath = "wwwroot";
             });
 
             services.AddSwaggerGen(c =>

@@ -88,7 +88,24 @@ Der Server enthält einen Testdatensatz mit der `dataSourceId` "`testdata`".
 
 ## Verwendung von Docker
 
-Todo
+### Windows 10 WSL2 / Linux (X64)
+
+Dieses Repository enthält ein `Dockerfile` und Hilfsscripte `docker-xxx.cmd` zur Erzeugung von Docker Images und Starten des CO²-Servers in Docker Containern.
+
+Die neueste Version eines WSL2 basierten Docker Images ist öffentlich unter den Namen **ramdac/co2-server** im [Docker Hub verfügbar](https://hub.docker.com/repository/docker/ramdac/co2-server). Bei Verwendung dieses Images müssen neben Docker keine weiteren Tools oder SDKs installiert werden.
+
+Zur Ausführung unter Windows 10 wird **Docker Desktop** ab Version 3 mit aktivierter Unterstützung für WSL2 (Windows Subsystem für Linux) benötigt.
+
+* [Installationsanleitung](https://docs.docker.com/docker-for-windows/install/)
+* [Docker Desktop WSL2](https://docs.docker.com/docker-for-windows/wsl/)
+
+Über `docker-run.cmd` kann der Container **testweise** gestartet werden. Der CO2-Server ist dann unter Port 1234 über die Adresse <http://localhost:1234/> erreichbar. Wird der Server mit `Strg-C` beendet, wird der Container heruntergefahren und **inkl. aller evtl. erzeugen Daten gelöscht**.
+
+Durch Mappen des Daten Ordners `App_Data` auf einen lokalen Ordner außerhalb des Docker Containers oder auf ein Volume können die Daten über Containerneustarts und -updates hinweg erhalten werden.
+
+### Raspberry PI (Arm)
+
+In Entwicklung.
 
 ## Links
 
