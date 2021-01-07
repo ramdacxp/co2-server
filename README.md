@@ -55,9 +55,35 @@ Nach dem Start ist der Server unter folgenden Adressen erreichbar (mit und ohne 
 * <https://localhost:5001/>
 * <http://localhost:5000/>
 
+Der Server kann mit der Tastenkombination `Strg-C` beendet werden.
+
+## Web-API
+
+Die CO²-Server Web-API bietet Methoden zum **Hinzufügen und Abfragen von AirQuality Daten**. Ein Löschen von Daten ist nicht möglich.
+
+Es werden mehrere **Datenquellen** (`DataSource`) unterstützt. Eine Datenquelle identifiziert einen Sensor eindeutig. Eine `dataSourceId` ist ein Text bestehend aus Kleinbuchstaben, Ziffern, Minus oder Unterstrich. Es können die Ids aller vorhandenen Datenquellen abgefragt werden.
+
+Pro Datenquelle werden mehrere **Datenpakete** (`DataPackage`) unterstützt. Ein Datenpaket enthält für eine bestimmte Datenquelle die Sensordaten eines Monats. Die `dataPackageId` ist ein Text im Format `JJJJ-MM` für Jahr und Monat. Es können die Ids aller vorhandenen Datenpakete für eine bestimmte Datenquelle abgefragt werden.
+
+Pro Datenquelle und DatenPaket kann eine Liste der vorhandenen **AirQuality Daten** abgefragt werden.
+
+| Feld             | Typ                            | Beschreibung                                                                                   |
+|------------------|--------------------------------|------------------------------------------------------------------------------------------------|
+| timestamp        | DateTime (YYYY-MM-DDTHH:MM.SS) | Zeitpunkt der Messung in lokaler Zeit                                                          |
+| temperature      | Ganzzahl (1/10 Grad Celsius)   | Temperatur zum Messzeitpunkt in 1/10 C; z.Bsp. 236 für 23,6°C                                  |
+| co2Concentration | Ganzzahl (ppm)                 | CO² Kontentration in der Umgebungsluft in PPM (Parts per Million); typischer Weise 400 .. 5000 |
+
+Zum **Hinzufügen** von Daten muss eine `dataSourceId` zusammen mit einem AirQuality Datensatz übergeben werden. Notwendige Datenquellen und Datenpakete werden automatisch erstellt, wenn nötig.
+
+## Swagger
+
+Unter der Adresse <http://localhost:5000/swagger/> ist ein Swagger UI zum Testen der zur Verfügung gestellten Web API erreichbar.
+
 ![Swagger UI für die angebotene Web API](images/swagger.png)
 
-Der Server kann mit der Tastenkombination `Strg-C` beendet werden.
+Der Server enthält einen Testdatensatz mit der `dataSourceId` "`testdata`". 
+
+![Testdaten über Swagger](images/testdata.png)
 
 ## Verwendung von Docker
 
