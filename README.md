@@ -8,12 +8,13 @@ Der Server ist in .Net Core entwickelt und unter Windows und Linux lauffähig. F
 
 Benötigte Software unter Windows 10:
 
-* [Visual Studio Code](https://code.visualstudio.com/)
 * [Git](https://git-scm.com/downloads)
+* [Visual Studio Code](https://code.visualstudio.com/)
+* [.NET SDK](https://dotnet.microsoft.com/download) ([Version 5.0-101](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.101-windows-x64-installer) oder neuer)
 
-Weitere Tools werden automatisch als VS Code Plugins installiert, sobald der Root-Ordner dieses Repositories in Visual Studio geladen wurde:
+Weitere Tools werden automatisch als VS Code Erweiterungen installiert, sobald der Root-Ordner dieses Repositories in Visual Studio geladen wurde:
 
-* VSCode und Git müssen installiert sein
+* Git, VSCode und das SDK müssen installiert sein
 * Windows Eingabeaufforderung öffnen (z.Bsp. mit `[Win]-R`, `cmd`, `[Enter]`)
 * In den Ordner wechseln, der Code-Repositories enthalten soll (z.Bsp. `Source\Repos`) und dieses Repo mit Git clonen:
 
