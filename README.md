@@ -4,7 +4,7 @@ Dieses Repo beinhaltet einen Server zur zentralen Speicherung und Anzeige der Da
 
 Der Server ist in .Net Core entwickelt und unter Windows und Linux lauffähig. Für Windows und Raspberry Pi stehen Docker Images zur Verfügung. Daten werden in CSV-Dateien gespeichert.
 
-## Software selbst compilieren
+## Software selbst kompilieren
 
 Benötigte Software unter Windows 10:
 
@@ -16,7 +16,7 @@ Weitere Tools werden automatisch als VS Code Erweiterungen installiert, sobald d
 
 * Git, VSCode und das SDK müssen installiert sein
 * Windows Eingabeaufforderung öffnen (z.Bsp. mit `[Win]-R`, `cmd`, `[Enter]`)
-* In den Ordner wechseln, der Code-Repositories enthalten soll (z.Bsp. `Source\Repos`) und dieses Repo mit Git clonen:
+* In den Ordner wechseln, der Code-Repositories enthalten soll (z.Bsp. `Source\Repos`) und dieses Repo mit Git klonen:
 
   ```cmd
   cd 
@@ -72,7 +72,7 @@ Pro Datenquelle und DatenPaket kann eine Liste der vorhandenen **AirQuality Date
 |------------------|--------------------------------|------------------------------------------------------------------------------------------------|
 | timestamp        | DateTime (YYYY-MM-DDTHH:MM.SS) | Zeitpunkt der Messung in lokaler Zeit                                                          |
 | temperature      | Ganzzahl (1/10 Grad Celsius)   | Temperatur zum Messzeitpunkt in 1/10 C; z.Bsp. 236 für 23,6°C                                  |
-| co2Concentration | Ganzzahl (ppm)                 | CO² Kontentration in der Umgebungsluft in PPM (Parts per Million); typischer Weise 400 .. 5000 |
+| co2Concentration | Ganzzahl (ppm)                 | CO² Konzentration in der Umgebungsluft in PPM (Parts per Million); typischer Weise 400 .. 5000 |
 
 Zum **Hinzufügen** von Daten muss eine `dataSourceId` zusammen mit einem AirQuality Datensatz übergeben werden. Notwendige Datenquellen und Datenpakete werden automatisch erstellt, wenn nötig.
 
@@ -82,7 +82,7 @@ Unter der Adresse <http://localhost:5000/swagger/> ist ein Swagger UI zum Testen
 
 ![Swagger UI für die angebotene Web API](images/swagger.png)
 
-Der Server enthält einen Testdatensatz mit der `dataSourceId` "`testdata`". 
+Der Server enthält einen Testdatensatz mit der `dataSourceId` "`testdata`".
 
 ![Testdaten über Swagger](images/testdata.png)
 
