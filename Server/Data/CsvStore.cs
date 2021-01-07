@@ -1,6 +1,8 @@
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using CsvHelper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -8,6 +10,8 @@ namespace Server.Data
 {
     public class CsvStore
     {
+        private static object _lock = new object();
+
         private readonly ILogger<CsvStore> _logger;
 
         private readonly IOptions<ServerConfiguration> _config;
@@ -32,7 +36,7 @@ namespace Server.Data
                 {
                     result.Add(sdi.Name.ToLowerInvariant());
                 }
-                _logger.LogInformation($"CSV store contains '{result.Count}' data sources.");
+                _logger.LogInformation($"CSV store contains {result.Count} data source(s).");
             }
             else
             {
@@ -54,7 +58,7 @@ namespace Server.Data
                 {
                     result.Add(sdi.Name.ToLowerInvariant());
                 }
-                _logger.LogInformation($"CSV store of data source '{dataSourceId}' contains '{result.Count}' data packages.");
+                _logger.LogInformation($"CSV store contains {result.Count} data package(s) for data source '{dataSourceId}'.");
             }
             else
             {
@@ -63,5 +67,66 @@ namespace Server.Data
 
             return result;
         }
+
+        public IEnumerable<AirQuality> GetData(string dataSourceId, string dataPackageId)
+        {
+            var result = new List<AirQuality>();
+
+            var di = new DirectoryInfo(Path.Combine(RootPath, dataSourceId, dataPackageId));
+            if (di.Exists)
+            {
+                foreach (var fi in di.GetFiles("*.csv"))
+                {
+                    lock (_lock)
+                    {
+                        using (var reader = new StreamReader(fi.FullName))
+                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                        {
+                            result.AddRange(csv.GetRecords<AirQuality>());
+                        }
+                    }
+                }
+
+                _logger.LogInformation($"CSV store '{dataSourceId}/{dataPackageId}' contains {result.Count} record(s).");
+            }
+            else
+            {
+                _logger.LogWarning($"CSV store does not contain records for '{dataSourceId}/{dataPackageId}'.");
+            }
+
+            return result.OrderBy(r => r.Timestamp);
+        }
+
+        public bool AddData(string dataSourceId, AirQuality data)
+        {
+            if (data == null)
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                var dataPackageId = data.Timestamp.ToString("yyyy-MM", CultureInfo.InvariantCulture);
+                var di = new DirectoryInfo(Path.Combine(RootPath, dataSourceId, dataPackageId));
+                if (!di.Exists)
+                {
+                    di.Create();
+                }
+
+                var fi = new FileInfo(Path.Combine(di.FullName, data.Timestamp.ToString("yyyy-MM-dd") + ".csv"));
+                var writeCsvHeader = !fi.Exists;
+
+                using (var writer = new StreamWriter(fi.FullName, true))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    // use async variant as others have problems with LF
+                    csv.Configuration.HasHeaderRecord = writeCsvHeader;
+                    csv.WriteRecordsAsync<AirQuality>(new[] { data }).Wait();
+                }
+            }
+
+            return true;
+        }
+
     }
 }

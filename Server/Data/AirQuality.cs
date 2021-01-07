@@ -1,4 +1,5 @@
 ﻿using System;
+using CsvHelper.Configuration.Attributes;
 
 namespace Server.Data
 {
@@ -7,6 +8,7 @@ namespace Server.Data
         /// <summary>
         /// Local date and time when data was sampled
         /// </summary>
+        [FormatAttribute("yyyy-MM-ddTHH:mm:ss")]
         public DateTime Timestamp { get; set; }
 
         /// <summary>

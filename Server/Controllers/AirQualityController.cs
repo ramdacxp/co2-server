@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Server.Data;
@@ -31,10 +30,35 @@ namespace Server.Controllers
         }
 
         [HttpGet("{dataSourceId}")]
-        public IEnumerable<string> GetDataPackages(string dataSourceId)
+        public IEnumerable<string> GetDataPackages(
+            [RegularExpression(@"^[a-z0-9_-]+$", ErrorMessage="No valid data source id")]
+            string dataSourceId)
         {
             return _store.GetDataPackages(dataSourceId);
         }
 
+        [HttpGet("{dataSourceId}/{dataPackageId}")]
+        public IEnumerable<AirQuality> GetData(
+            [RegularExpression(@"^[a-z0-9_-]+$", ErrorMessage="No valid data source id")]
+            string dataSourceId,
+            [RegularExpression(@"^[a-z0-9_-]+$", ErrorMessage="No valid data package id")]
+            string dataPackageId)
+        {
+            return _store.GetData(dataSourceId, dataPackageId);
+        }
+
+        [HttpPost("{dataSourceId}")]
+        public IActionResult AddData(
+            [RegularExpression(@"^[a-z0-9_-]+$", ErrorMessage="No valid data source id")]
+            string dataSourceId,
+            [FromBody]
+            AirQuality data)
+        {
+            if (!_store.AddData(dataSourceId, data))
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
     }
 }

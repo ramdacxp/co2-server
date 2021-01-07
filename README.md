@@ -67,6 +67,7 @@ Todo
 
 * Repo der passenden [CO²-Ampel](https://github.com/ramdacxp/co2-ampel)
 * [Der CO2-Warner für die Schule](https://www.heise.de/select/make/2020/5/2022015381334973804) im [Make: Magazin 5/2020](https://www.heise.de/select/make/2020/5)
+* [CVS Helper](https://github.com/JoshClose/CsvHelper)
 
 ## Lizenz
 
