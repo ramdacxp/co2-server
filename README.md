@@ -86,33 +86,58 @@ Der Server enthält einen Testdatensatz mit der `dataSourceId` "`testdata`".
 
 ![Testdaten über Swagger](images/testdata.png)
 
-## Verwendung von Docker
+## Verwendung mit Docker
 
-### Windows 10 WSL2 / Linux (X64)
+Dieses Repository enthält Dockerfiles und Hilfsscripte (`docker-xxx.cmd`) zur Erzeugung von Docker Images und zum Starten des CO²-Servers aus Docker Containern. Bei Verwendung dieser Images müssen neben Docker keine weiteren Tools oder SDKs installiert werden.
 
-Dieses Repository enthält ein `Dockerfile` und Hilfsscripte `docker-xxx.cmd` zur Erzeugung von Docker Images und Starten des CO²-Servers in Docker Containern.
+Es kommen Linux Docker Images zum Einsatz. Diese stehen für die Architekturen **AMD64** (für Linux und Window) und **ARM** (für Raspberry PI 3 oder neuer) im [Docker Hub](https://hub.docker.com/repository/docker/ramdac/co2-server) zur Verfügung:
 
-Die neueste Version eines WSL2 basierten Docker Images ist öffentlich unter den Namen **ramdac/co2-server** im [Docker Hub verfügbar](https://hub.docker.com/repository/docker/ramdac/co2-server). Bei Verwendung dieses Images müssen neben Docker keine weiteren Tools oder SDKs installiert werden.
+<https://hub.docker.com/repository/docker/ramdac/co2-server>
 
-Zur Ausführung unter Windows 10 wird **Docker Desktop** ab Version 3 mit aktivierter Unterstützung für WSL2 (Windows Subsystem für Linux) benötigt.
+* AMD64 für Windows/Linus: `docker pull ramdac/co2-server`
+* ARM für Raspberry Pi: `docker pull ramdac/co2-server:arm`
+
+### Windows 10 WSL2
+
+Zur Verwendung unter Windows 10 wird **Docker Desktop** ab Version 3 mit aktivierter Unterstützung für WSL2 (Windows Subsystem für Linux) benötigt.
 
 * [Installationsanleitung](https://docs.docker.com/docker-for-windows/install/)
 * [Docker Desktop WSL2](https://docs.docker.com/docker-for-windows/wsl/)
 
 Über `docker-run.cmd` kann der Container **testweise** gestartet werden. Der CO2-Server ist dann unter Port 1234 über die Adresse <http://localhost:1234/> erreichbar. Wird der Server mit `Strg-C` beendet, wird der Container heruntergefahren und **inkl. aller evtl. erzeugen Daten gelöscht**.
 
-Durch Mappen des Daten Ordners `App_Data` auf einen lokalen Ordner außerhalb des Docker Containers oder auf ein Volume können die Daten über Containerneustarts und -updates hinweg erhalten werden.
+Durch Mappen des Daten Ordners `App_Data` auf einen lokalen Ordner außerhalb des Docker Containers oder durch Verwendung eines Volumes können die Daten über Containerneustarts und -updates hinweg erhalten werden.
 
 Ausgewählte Docker-Befehle:
 
-* Starten des CO2-Servers mit Weiterleitung des Webserver auf Port 1234 (<http://localhost:1234/>):  
+* Starten des CO2-Servers mit Port-Weiterleitung auf 1234 (<http://localhost:1234/>):  
   `docker run -p 1234:80 -it --rm ramdac/co2-server`
 * Starten einer Unix Kommandozeile (bash) im Docker Container. Hiermit kann das Dateisystem des Containers untersucht werden, z.Bsp. der Inhalt des Ordners `/app/App_Data`:  
   `docker run -p 1234:80 -it --rm --entrypoint bash ramdac/co2-server`
 
-### Raspberry PI (Arm)
+### Raspberry Pi
 
-In Entwicklung.
+Das folgende Shellscript startet den CO2-Server auf dem Raspberry Pi im Hintergrund.
+
+* Der zugehörige Docker Container hat den Namen `co2server` und kann über diesen gestartet und gestoppt werden.
+* Der Server ist über den Rechnernamen des Raspberry Pi auf Port 4444 verfügbar.
+* Die Daten werden außerhalb des Docker Containers im gemappten Verzeichnis `~/docker/co2server` abgelegt. Hierbei ist `~` das Homeverzeichnis des Docker Users. Das Verzeichnis muss vor dem Start des Containers angelegt worden sein und der Docker-User benötigt Schreibrechte.  
+  **Achtung:** Eine CO2-Ampel sendet relativ oft Daten zum Server, was entsprechend viele Schreibzugriffe zur Folge hat und die Lebensdauer der SD-Speicherkarte des Raspberry Pi verringern kann. Eine mögliche Lösung wäre die Verwendung eines Samba-Fileshares als Datenspeicherordner.
+
+```bash
+#!/bin/bash
+
+docker container stop co2server
+docker container rm co2server
+docker pull ramdac/co2-server:arm
+
+docker run -d \
+  --name co2server \
+  -p 4444:80 \
+  -v ~/docker/co2server:/app/App_Data \
+  --restart unless-stopped \
+  ramdac/co2-server:arm
+```
 
 ## Links
 

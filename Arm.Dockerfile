@@ -1,6 +1,10 @@
-### SDK
+###
+### Raspberry Pi Version (ARM 32 v7)
+###
+
+### SDK -> https://hub.docker.com/_/microsoft-dotnet-sdk
 ### ============================================================================
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS sdk
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS sdk
 
 ### RESTORE
 WORKDIR /server
@@ -13,15 +17,17 @@ RUN dotnet publish -c Release -o build
 
 ### RUNTIME
 ### ============================================================================
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1.1-buster-slim-arm32v7
+FROM mcr.microsoft.com/dotnet/aspnet:5.0.1-buster-slim-arm32v7
 
-### COPY APP
+### COPY PUBLISHED APP
 WORKDIR /app
 COPY --from=sdk server/build .
 
+### CREATE APP_DATA AND COPY SAMPLE DATA
+WORKDIR /app/App_Data
+COPY --from=sdk server/App_Data .
+
 ### TIME ZONE
-#RUN echo "Europe/Berlin" > /etc/timezone
-#RUN dpkg-reconfigure -f noninteractive tzdata
 ENV TZ=Europe/Berlin
 ENV LANG de_DE.UTF-8
 ENV LANGUAGE ${LANG}
@@ -30,6 +36,7 @@ ENV LC_ALL ${LANG}
 ### START SETTINGS
 EXPOSE 80
 EXPOSE 5000
-ENV ConnectionStrings__NumericStore="Server=localhost;Port=3307;User ID=dbuser;Password=dbpasswd;Database=mydb"
+EXPOSE 5001
+ENV Co2Server__StoragePath="App_Data"
 WORKDIR /app
-ENTRYPOINT ["dotnet", "server.dll"]
+ENTRYPOINT ["dotnet", "co2-server.dll"]
