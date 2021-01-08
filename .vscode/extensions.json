@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "ms-dotnettools.csharp",
+    "ms-azuretools.vscode-docker",
+    "k--kato.docomment",
+    "eamodio.gitlens",
+    "shd101wyy.markdown-preview-enhanced",
+    "fcrespo82.markdown-table-formatter",
+    "humao.rest-client"
+  ]
+}
