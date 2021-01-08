@@ -34,10 +34,10 @@ Weitere Tools werden automatisch als VS Code Erweiterungen installiert, sobald d
 
 Der Server kann in VS Code gestartet werden mit `Run > Start Debugging`
 oder alternativ auf der Kommandozeile durch Ausführen von `dotnet run`
-im Unterordner `Server`.
+im Unterordner `server`.
 
 ```cmd
-C:\Users\Mischa\Source\Repos\co2-server\Server>dotnet run
+C:\Users\Mischa\Source\Repos\co2-server\server>dotnet run
 Building...
 info: Microsoft.Hosting.Lifetime[0]
       Now listening on: https://localhost:5001
@@ -48,7 +48,7 @@ info: Microsoft.Hosting.Lifetime[0]
 info: Microsoft.Hosting.Lifetime[0]
       Hosting environment: Development
 info: Microsoft.Hosting.Lifetime[0]
-      Content root path: C:\Users\Mischa\Source\Repos\co2-server\Server
+      Content root path: C:\Users\Mischa\Source\Repos\co2-server\server
 ```
 
 Nach dem Start ist der Server unter folgenden Adressen erreichbar (mit und ohne Verschlüsselung):
@@ -102,6 +102,13 @@ Zur Ausführung unter Windows 10 wird **Docker Desktop** ab Version 3 mit aktivi
 Über `docker-run.cmd` kann der Container **testweise** gestartet werden. Der CO2-Server ist dann unter Port 1234 über die Adresse <http://localhost:1234/> erreichbar. Wird der Server mit `Strg-C` beendet, wird der Container heruntergefahren und **inkl. aller evtl. erzeugen Daten gelöscht**.
 
 Durch Mappen des Daten Ordners `App_Data` auf einen lokalen Ordner außerhalb des Docker Containers oder auf ein Volume können die Daten über Containerneustarts und -updates hinweg erhalten werden.
+
+Ausgewählte Docker-Befehle:
+
+* Starten des CO2-Servers mit Weiterleitung des Webserver auf Port 1234 (<http://localhost:1234/>):  
+  `docker run -p 1234:80 -it --rm ramdac/co2-server`
+* Starten einer Unix Kommandozeile (bash) im Docker Container. Hiermit kann das Dateisystem des Containers untersucht werden, z.Bsp. der Inhalt des Ordners `/app/App_Data`:  
+  `docker run -p 1234:80 -it --rm --entrypoint bash ramdac/co2-server`
 
 ### Raspberry PI (Arm)
 

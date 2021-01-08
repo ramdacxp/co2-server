@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>co2-server</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

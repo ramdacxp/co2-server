@@ -10,14 +10,15 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Server/bin/Debug/net5.0/Server.dll",
+            "program": "${workspaceFolder}/server/bin/Debug/net5.0/co2-server.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Server",
+            "cwd": "${workspaceFolder}/server",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
                 "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+                // "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+                "pattern": "\\bNow listening on:\\s+(http://\\S+)"
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
