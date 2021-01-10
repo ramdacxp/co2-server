@@ -38,7 +38,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("{dataSourceId}/{dataPackageId}")]
-        public IEnumerable<AirQuality> GetData(
+        public IEnumerable<DatedAirQuality> GetData(
             [RegularExpression(@"^[a-z0-9_-]+$", ErrorMessage="No valid data source id")]
             string dataSourceId,
             [RegularExpression(@"^[a-z0-9_-]+$", ErrorMessage="No valid data package id")]
@@ -54,7 +54,14 @@ namespace Server.Controllers
             [FromBody]
             AirQuality data)
         {
-            if (!_store.AddData(dataSourceId, data))
+            var datedData = new DatedAirQuality
+            {
+                Timestamp = DateTime.Now,
+                Co2Concentration = data.Co2Concentration,
+                Temperature = data.Temperature
+            };
+
+            if (!_store.AddData(dataSourceId, datedData))
             {
                 return BadRequest();
             }

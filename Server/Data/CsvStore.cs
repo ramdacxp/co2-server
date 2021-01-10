@@ -68,9 +68,9 @@ namespace Server.Data
             return result;
         }
 
-        public IEnumerable<AirQuality> GetData(string dataSourceId, string dataPackageId)
+        public IEnumerable<DatedAirQuality> GetData(string dataSourceId, string dataPackageId)
         {
-            var result = new List<AirQuality>();
+            var result = new List<DatedAirQuality>();
 
             var di = new DirectoryInfo(Path.Combine(RootPath, dataSourceId, dataPackageId));
             if (di.Exists)
@@ -82,7 +82,7 @@ namespace Server.Data
                         using (var reader = new StreamReader(fi.FullName))
                         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                         {
-                            result.AddRange(csv.GetRecords<AirQuality>());
+                            result.AddRange(csv.GetRecords<DatedAirQuality>());
                         }
                     }
                 }
@@ -97,7 +97,7 @@ namespace Server.Data
             return result.OrderBy(r => r.Timestamp);
         }
 
-        public bool AddData(string dataSourceId, AirQuality data)
+        public bool AddData(string dataSourceId, DatedAirQuality data)
         {
             if (data == null)
             {
@@ -121,7 +121,7 @@ namespace Server.Data
                 {
                     // use async variant as others have problems with LF
                     csv.Configuration.HasHeaderRecord = writeCsvHeader;
-                    csv.WriteRecordsAsync<AirQuality>(new[] { data }).Wait();
+                    csv.WriteRecordsAsync<DatedAirQuality>(new[] { data }).Wait();
                 }
             }
 
