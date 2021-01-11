@@ -90,9 +90,9 @@ Der Server enthält einen Testdatensatz mit der `dataSourceId` "`testdata`".
 
 Dieses Repository enthält Dockerfiles und Hilfsscripte (`docker-xxx.cmd`) zur Erzeugung von Docker Images und zum Starten des CO²-Servers aus Docker Containern. Bei Verwendung dieser Images müssen neben Docker keine weiteren Tools oder SDKs installiert werden.
 
-Es kommen Linux Docker Images zum Einsatz. Diese stehen für die Architekturen **AMD64** (für Linux und Window) und **ARM** (für Raspberry PI 3 oder neuer) im [Docker Hub](https://hub.docker.com/repository/docker/ramdac/co2-server) zur Verfügung:
+Es kommen Linux Docker Images zum Einsatz. Diese stehen für die Architekturen **AMD64** (für Linux und Window) und **ARM** (für Raspberry PI 3 oder neuer) im [Docker Hub](https://hub.docker.com/r/ramdac/co2-server) zur Verfügung:
 
-<https://hub.docker.com/repository/docker/ramdac/co2-server>
+<https://hub.docker.com/r/ramdac/co2-server>
 
 * AMD64 für Windows/Linus: `docker pull ramdac/co2-server`
 * ARM für Raspberry Pi: `docker pull ramdac/co2-server:arm`
