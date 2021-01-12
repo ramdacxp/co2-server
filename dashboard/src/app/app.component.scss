@@ -1,0 +1,17 @@
+.nav-item {
+  @apply no-underline;
+  @apply text-gray-800;
+  @apply border-b-2;
+  @apply border-transparent;
+  @apply uppercase;
+  @apply tracking-wide;
+  @apply font-bold;
+  @apply text-xs;
+  @apply py-3;
+  @apply mr-8;
+}
+
+.nav-item-active {
+  @apply text-yellow-900;
+  @apply border-yellow-600;
+}

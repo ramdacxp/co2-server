@@ -1,0 +1,14 @@
+.datasource {
+  @apply block;
+  @apply shadow-md;
+  @apply bg-white;
+  @apply border;
+  @apply border-gray-200;
+  @apply p-4;
+  @apply capitalize;
+}
+
+.datasource-selected {
+  @apply bg-yellow-600;
+  @apply text-gray-100;
+}
