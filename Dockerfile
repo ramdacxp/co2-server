@@ -19,6 +19,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=sdk server/build .
 
+### CREATE AND COPY WWWROOT
+WORKDIR /app/wwwroot
+COPY --from=sdk server/wwwRoot .
+
 ### CREATE APP_DATA AND COPY SAMPLE DATA
 WORKDIR /app/App_Data
 COPY --from=sdk server/App_Data .
