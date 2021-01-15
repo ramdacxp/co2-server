@@ -22,21 +22,25 @@ export class LineChartComponent implements OnInit {
 
   chartOption: EChartsOption = {
     title: { text: 'CO² Konzentration (ppm)' },
-    xAxis: { type: 'category' },
+    xAxis: {
+      type: 'time',
+      maxInterval: 3600 * 1000 * 24, // day
+      splitArea: { show: true }
+    },
     yAxis: { type: 'value' },
 
     dataZoom: [
-      { startValue: 0 },
+      { start: 0, end: 100 },
       { type: 'inside' }
     ],
 
     tooltip: {
-      trigger: 'item',
-      showDelay: 0,
-      transitionDuration: 0.2,
-      formatter: function (params) {
-        return `<b>${params['name']}</b> : ${params['value']}`;
-      }
+      trigger: 'axis',
+      // showDelay: 0,
+      // transitionDuration: 0.2,
+      // formatter: function (params) {
+      //   return `<b>${params['name']}</b> : ${params['value']}`;
+      // }
     },
 
     visualMap: {
@@ -52,6 +56,8 @@ export class LineChartComponent implements OnInit {
 
     series: [{
       type: 'line',
+      showSymbol: false,
+      name: 'CO² (ppm)',
       data: []
     }],
   };
@@ -76,12 +82,21 @@ export class LineChartComponent implements OnInit {
       var chartData = [];
       data.forEach(function (value) {
         // console.log(`- ${value.timestamp}: ${value.co2Concentration}, ${value.temperature}`);
-        chartData.push([value.timestamp, value.co2Concentration]);
+        var d = new Date(value.timestamp);
+
+        chartData.push([
+          value.timestamp,
+          //d.toDateString() + " " + d.toTimeString(),
+          value.co2Concentration]);
       });
 
       if (this._chart) {
         this._chart.setOption({
           title: { text: `CO² Konzentration (ppm) - ${this._dataSource}` },
+          dataZoom: [
+            { start: 0, end: 100 },
+            { type: 'inside' }
+          ],
           series: [{
             data: chartData,
             type: 'line'
