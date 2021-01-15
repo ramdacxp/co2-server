@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ChartDataService } from 'src/app/services/chart-data.service';
 
 @Component({
   selector: 'app-home-view',
@@ -8,29 +9,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeViewComponent implements OnInit {
 
+  sources: string[] = [];
   selectedSource = '';
 
-  sources: DataSource[] = [
-    { name: 'eins', value: 100 },
-    { name: 'zwei', value: 200 },
-    { name: 'drei', value: 1300 },
-    { name: 'vier', value: 4000 },
-    { name: 'fünf', value: 500 },
-    { name: 'sechs', value: 1600 },
-  ];
-
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private service: ChartDataService) {
   }
 
   ngOnInit(): void {
+    this.service.getDataSources().subscribe(sources => {
+      this.sources = sources;
+    });
+
     this.route.queryParams.subscribe(params => {
       this.selectedSource = (!!params.source) ? params.source : '';
+      console.log(`Selected: ${this.selectedSource}`);
     });
   }
 
 }
 
-class DataSource {
-  name: string;
-  value: number;
-}
