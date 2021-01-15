@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
+import { ChartDataService } from '../chart-data.service';
 
 @Component({
   selector: 'app-line-chart',
@@ -65,9 +66,13 @@ export class LineChartComponent implements OnInit {
     ],
   };
 
-  constructor() { }
+  constructor(private service: ChartDataService) {
+  }
 
   ngOnInit(): void {
+    this.service.getAirQualityData('testdata').subscribe(data => {
+      console.log(`Daten: ${data.length}`);
+    });
   }
 
 }

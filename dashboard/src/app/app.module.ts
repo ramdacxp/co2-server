@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { InfoViewComponent } from './views/info-view/info-view.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { InfoViewComponent } from './views/info-view/info-view.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
+    HttpClientModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),
