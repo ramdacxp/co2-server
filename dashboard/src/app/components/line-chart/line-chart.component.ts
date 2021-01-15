@@ -30,17 +30,12 @@ export class LineChartComponent implements OnInit {
     yAxis: { type: 'value' },
 
     dataZoom: [
-      { start: 0, end: 100 },
+      { start: 0, end: 100 }, // startValue
       { type: 'inside' }
     ],
 
     tooltip: {
-      trigger: 'axis',
-      // showDelay: 0,
-      // transitionDuration: 0.2,
-      // formatter: function (params) {
-      //   return `<b>${params['name']}</b> : ${params['value']}`;
-      // }
+      trigger: 'axis'
     },
 
     visualMap: {
@@ -86,7 +81,6 @@ export class LineChartComponent implements OnInit {
 
         chartData.push([
           value.timestamp,
-          //d.toDateString() + " " + d.toTimeString(),
           value.co2Concentration]);
       });
 
