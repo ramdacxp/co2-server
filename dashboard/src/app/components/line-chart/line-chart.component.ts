@@ -66,6 +66,7 @@ export class LineChartComponent implements OnInit {
 
   onChartInit(chart: any) {
     this._chart = chart;
+    this.updateData();
   }
 
   updateData(): void {
