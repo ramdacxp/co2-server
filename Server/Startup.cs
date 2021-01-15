@@ -10,6 +10,8 @@ namespace Server
 {
     public class Startup
     {
+        readonly string AllowAngulaDevWebserverOriginPolicy = "myAllowAngulaDevWebserverOriginPolicyName";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,6 +24,13 @@ namespace Server
         {
             services.Configure<ServerConfiguration>(Configuration.GetSection("Co2Server"));
             services.AddSingleton<CsvStore>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    AllowAngulaDevWebserverOriginPolicy,
+                    builder => builder.WithOrigins("http://localhost:4200", "http://127.0.0.1:4200"));
+            });
 
             services.AddControllers();
 
@@ -47,6 +56,7 @@ namespace Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(AllowAngulaDevWebserverOriginPolicy);
             }
 
             app.UseSwagger();

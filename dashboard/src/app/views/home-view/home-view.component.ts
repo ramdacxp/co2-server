@@ -8,16 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeViewComponent implements OnInit {
 
+  sources: string[] = ['testdata', 'sensor', 'zwei', 'drei', 'vier', 'fünf', 'sechs'];
   selectedSource = '';
-
-  sources: DataSource[] = [
-    { name: 'eins', value: 100 },
-    { name: 'zwei', value: 200 },
-    { name: 'drei', value: 1300 },
-    { name: 'vier', value: 4000 },
-    { name: 'fünf', value: 500 },
-    { name: 'sechs', value: 1600 },
-  ];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -30,7 +22,3 @@ export class HomeViewComponent implements OnInit {
 
 }
 
-class DataSource {
-  name: string;
-  value: number;
-}

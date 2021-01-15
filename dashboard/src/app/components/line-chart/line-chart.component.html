@@ -1,3 +1,7 @@
-<div class="mt-4 bg-white p-4 shadow-md">
-  <div echarts [options]="chartOption"></div>
+<div *ngIf="!dataSource" class="mt-4 bg-white p-4 shadow-md">
+  Bitte wählen Sie eine Datenquelle aus.
+</div>
+
+<div *ngIf="!!dataSource" class="mt-4 bg-white p-4 shadow-md">
+  <div echarts [options]="chartOption" (chartInit)="onChartInit($event)"></div>
 </div>

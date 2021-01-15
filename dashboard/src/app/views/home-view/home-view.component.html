@@ -2,12 +2,12 @@
 
 <ul class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
   <li *ngFor="let source of sources">
-    <a class="datasource" routerLinkActive="datasource-selected" routerLink="/home" [queryParams]="{ source: source.name}">{{source.name}}</a>
+    <a class="datasource" routerLinkActive="datasource-selected" routerLink="/home" [queryParams]="{ source: source}">{{source}}</a>
   </li>
 </ul>
 
 <ng-container *ngIf="selectedSource!=''; else noSourceSelected">
-  <app-line-chart></app-line-chart>
+  <app-line-chart [dataSource]="selectedSource"></app-line-chart>
 </ng-container>
 <ng-template #noSourceSelected>
   <p class="mt-4">Bitte wählen Sie eine Datenquelle aus.</p>

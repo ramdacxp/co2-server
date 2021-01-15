@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { AirQuality } from './air-quality';
+import { AirQuality } from '../models/air-quality';
 import { Observable } from 'rxjs';
 
 const httpOptions = {
@@ -23,7 +23,11 @@ export class ChartDataService {
     return this.httpClient.get<string[]>(`${this.apiUrl}`);
   }
 
-  getAirQualityData(dataSource: string): Observable<AirQuality[]> {
-    return this.httpClient.get<AirQuality[]>(`${this.apiUrl}/${dataSource}`);
+  getDataPackages(dataSource: string): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.apiUrl}/${dataSource}`);
+  }
+
+  getAirQualityData(dataSource: string, dataPackage: string): Observable<AirQuality[]> {
+    return this.httpClient.get<AirQuality[]>(`${this.apiUrl}/${dataSource}/${dataPackage}`);
   }
 }
