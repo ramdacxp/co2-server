@@ -36,7 +36,7 @@ namespace Server
 
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "wwwroot";
+                configuration.RootPath = "wwwroot/app";
             });
 
             services.AddSwaggerGen(c =>
@@ -77,7 +77,7 @@ namespace Server
 
             app.UseSpa(spa =>
             {
-                // spa.Options.SourcePath = "MySubDir";
+                // spa.Options.SourcePath = "app";
             });
         }
     }

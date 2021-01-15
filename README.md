@@ -4,6 +4,7 @@ Dieses Repo beinhaltet einen Server zur zentralen Speicherung und Anzeige der Da
 
 Der Server ist in .Net Core entwickelt und unter Windows und Linux lauffähig. Für Windows und Raspberry Pi stehen Docker Images zur Verfügung. Daten werden in CSV-Dateien gespeichert.
 
+![CO2 Dashboard](images/dashboard.png)
 ## Software selbst kompilieren
 
 Benötigte Software unter Windows 10:
