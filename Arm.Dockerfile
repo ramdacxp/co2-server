@@ -17,7 +17,7 @@ RUN dotnet publish -c Release -o build
 
 ### RUNTIME
 ### ============================================================================
-FROM mcr.microsoft.com/dotnet/aspnet:5.0.1-buster-slim-arm32v7
+FROM --platform=linux/arm mcr.microsoft.com/dotnet/aspnet:5.0.1-buster-slim-arm32v7
 
 ### COPY PUBLISHED APP
 WORKDIR /app
