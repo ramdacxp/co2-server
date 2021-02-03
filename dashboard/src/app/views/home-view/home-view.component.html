@@ -6,9 +6,17 @@
   </li>
 </ul>
 
-<ng-container *ngIf="selectedSource!=''; else noSourceSelected">
-  <app-line-chart [dataSource]="selectedSource"></app-line-chart>
+<ul *ngIf="!!packages" class="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-4">
+  <li *ngFor="let package of packages">
+    <a class="block shadow-md bg-white border border-gray-200 text-center py-1{{selectedPackage===package ? ' bg-blue-600 text-gray-100' : ''}}" routerLink="/home"
+       [queryParams]="{ source: selectedSource, package: package}">{{package}}</a>
+  </li>
+</ul>
+
+<ng-container *ngIf="selectedSource!='' && selectedPackage!=''; else noSourceSelected">
+  <app-line-chart [dataSource]="selectedSource" [dataPackage]="selectedPackage"></app-line-chart>
 </ng-container>
 <ng-template #noSourceSelected>
-  <p class="mt-4">Bitte wählen Sie eine Datenquelle aus.</p>
+  <p class="mt-4">Bitte wählen Sie eine Datenquelle und einen Zeitbereich aus.</p>
 </ng-template>
+

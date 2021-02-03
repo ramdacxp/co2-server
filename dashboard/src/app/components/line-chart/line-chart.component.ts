@@ -20,6 +20,17 @@ export class LineChartComponent implements OnInit {
     return this._dataSource;
   }
 
+  private _dataPackage: string;
+
+  @Input()
+  set dataPackage(value: string) {
+    this._dataPackage = value;
+    this.updateData();
+  }
+  get dataPackage(): string {
+    return this._dataPackage;
+  }
+
   chartOption: EChartsOption = {
     title: { text: 'CO² Konzentration (ppm)' },
     xAxis: {
@@ -71,8 +82,8 @@ export class LineChartComponent implements OnInit {
   }
 
   updateData(): void {
-    var subscription = this._service.getAirQualityData(this._dataSource, '2021-01').subscribe(data => {
-      console.log(`Loaded ${data.length} records for datasource: ${this._dataSource}`);
+    var subscription = this._service.getAirQualityData(this._dataSource, this._dataPackage).subscribe(data => {
+      console.log(`Loaded ${data.length} records for: ${this._dataSource}/${this._dataPackage}`);
 
       var chartData = [];
       data.forEach(function (value) {
@@ -86,7 +97,7 @@ export class LineChartComponent implements OnInit {
 
       if (this._chart) {
         this._chart.setOption({
-          title: { text: `CO² Konzentration (ppm) - ${this._dataSource}` },
+          title: { text: `CO² Konzentration (ppm) - ${this._dataSource} - ${this._dataPackage}` },
           dataZoom: [
             { start: 0, end: 100 },
             { type: 'inside' }

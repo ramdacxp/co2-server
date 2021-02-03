@@ -11,6 +11,8 @@ export class HomeViewComponent implements OnInit {
 
   sources: string[] = [];
   selectedSource = '';
+  packages: string[] = [];
+  selectedPackage = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -23,9 +25,33 @@ export class HomeViewComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      this.selectedSource = (!!params.source) ? params.source : '';
-      console.log(`Selected: ${this.selectedSource}`);
+      // source changed?
+      if ((!!params.source) && (this.selectedSource !== params.source)) {
+        this.selectedSource = params.source;
+        console.log(`Changed source to: ${this.selectedSource}`);
+        this.loadPackages();
+      }
+
+      // package
+      if (!!params.package) {
+        this.selectedPackage = params.package;
+        console.log(`Changed package to: ${this.selectedPackage}`);
+      }
     });
+  }
+
+  loadPackages(): void {
+    this.packages = [];
+    this.selectedPackage = '';
+
+    if (!!this.selectedSource) {
+      console.log(`Loading packages for: ${this.selectedSource}`);
+      var subscripton = this.service.getDataPackages(this.selectedSource).subscribe(packages => {
+        this.packages = packages;
+        this.selectedPackage = (this.packages.length > 0) ? this.packages[this.packages.length-1] : '';
+        subscripton.unsubscribe();
+      });
+    }
   }
 
 }

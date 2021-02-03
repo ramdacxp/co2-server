@@ -2,6 +2,10 @@
   Bitte wählen Sie eine Datenquelle aus.
 </div>
 
-<div *ngIf="!!dataSource" class="mt-4 bg-white p-4 shadow-md">
+<div *ngIf="!!dataSource && !dataPackage" class="mt-4 bg-white p-4 shadow-md">
+  Bitte wählen Sie einen Zeitbereich aus.
+</div>
+
+<div *ngIf="!!dataSource && !!dataPackage" class="mt-4 bg-white p-4 shadow-md">
   <div echarts [options]="chartOption" (chartInit)="onChartInit($event)"></div>
 </div>

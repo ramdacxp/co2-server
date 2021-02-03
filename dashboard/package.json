@@ -9,7 +9,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:prod": "set NODE_ENV=production && ng build --prod --output-path=../Server/wwwroot/app --base-href=/app"
-
   },
   "private": true,
   "dependencies": {
