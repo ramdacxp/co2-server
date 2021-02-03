@@ -65,6 +65,9 @@ namespace Server.Data
                 _logger.LogWarning($"CSV store does not contain data source '{dataSourceId}'.");
             }
 
+            // Sort the packages as those (most likely) are named like 'YYYY-MM'
+            result.Sort();
+
             return result;
         }
 
